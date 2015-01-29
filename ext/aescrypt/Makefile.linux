@@ -13,16 +13,11 @@
 # NOT LIMITED TO, LOSS OF DATA OR DATA BEING RENDERED INACCURATE.
 #
 
-CC=gcc
+CC=gcc-4.9
 
-#The below line is for debugging
-#CFLAGS=-I. -ggdb -Wall -D_FILE_OFFSET_BITS=64
 CFLAGS=-Wall -D_FILE_OFFSET_BITS=64
 
 LIBS=
-
-#Uncomment the line below to compile on Mac
-#LIBS=-liconv
 
 all: aescrypt aescrypt_keygen
 
@@ -32,31 +27,12 @@ aescrypt: aescrypt.o aes.o sha256.o password.o keyfile.o
 aescrypt_keygen: aescrypt_keygen.o password.o
 	$(CC) $(CFLAGS) $(LIBS) -o $@ $^
 
-test:
-	@$(CC) -DTEST -o sha.test sha256.c
-	@./sha.test
-	@#rm sha.test
-	@$(CC) -DTEST -o aes.test aes.c
-	@./aes.test
-	@#rm aes.test
-
-testfile: aescrypt
-	@echo "testing this 123..." > test.orig.txt
-	./aescrypt -e -p "praxis" test.orig.txt
-	@cp test.orig.txt.aes test.txt.aes
-	./aescrypt -d -p "praxis" test.txt.aes
-	cmp test.orig.txt test.txt
-
 %.o: %.c %.h
 	$(CC) $(CFLAGS) -c $*.c
 
 install: aescrypt
-	install -o root -g root -m 755 aescrypt /usr/bin
-	install -o root -g root -m 755 aescrypt_keygen /usr/bin
-
-uninstall:
-	rm -f /usr/bin/aescrypt
-	rm -f /usr/bin/aescrypt_keygen
+	install -m 755 aescrypt ../../lib/bin
+	install -m 755 aescrypt_keygen ../../lib/bin
 
 clean:
 	rm -f *.o aescrypt aescrypt_keygen test* *test
