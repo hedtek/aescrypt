@@ -38,7 +38,7 @@ module Aescrypt
     end
 
     def environment
-      {PATH: File.dirname(__FILE__) + "/../bin"}
+      {"PATH" => File.dirname(__FILE__) + "/../bin"}
     end
 
     def execute(options = {})
