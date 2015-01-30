@@ -48,7 +48,7 @@ module Aescrypt
       system(environment, bundled_binary, "-e", "-p", password, "-o", out_file, *input_file)
       {
         password: password,
-        file: file
+        file: out_file
       }
     end
   end
