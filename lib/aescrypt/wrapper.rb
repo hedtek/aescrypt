@@ -9,11 +9,15 @@ module Aescrypt
       execute(file: file, password: password)
     end
 
-    def encrypt_files(files, password: nil)
+    def encrypt_files(files, password: nil, file_prefix: nil)
       zip_file = Dir.tmpdir + "/#{SecureRandom.uuid}.zip"
       Zip::File.open(zip_file, Zip::File::CREATE) do |zipfile|
         files.each do |filename|
-          zipfile.add(File.basename(filename), filename)
+          if file_prefix
+            zipfile.add(File.basename(filename), "#{file_prefix}/#{filename}")
+          else
+            zipfile.add(File.basename(filename), filename)
+          end
         end
       end
 
