@@ -14,7 +14,7 @@ module Aescrypt
       Zip::File.open(zip_file, Zip::File::CREATE) do |zipfile|
         files.each do |filename|
           if file_prefix
-            zipfile.add(File.basename(filename), "#{file_prefix}/#{filename}")
+            zipfile.add("#{file_prefix}/#{File.basename(filename)}", filename)
           else
             zipfile.add(File.basename(filename), filename)
           end
