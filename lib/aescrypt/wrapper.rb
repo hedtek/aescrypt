@@ -43,7 +43,7 @@ module Aescrypt
 
     def execute(options = {})
       out_file = options[:out_file] || Dir.tmpdir + "/#{SecureRandom.uuid}.aes"
-      if options[:password].nil? || options[:password].trim == ""
+      if options[:password].nil? || options[:password].strip == ""
         password = SecureRandom.base64
       else
         password = options[:password]
