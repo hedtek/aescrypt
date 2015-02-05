@@ -13,6 +13,7 @@ module Aescrypt
       zip_file = Dir.tmpdir + "/#{SecureRandom.uuid}.zip"
       Zip::File.open(zip_file, Zip::File::CREATE) do |zipfile|
         files.each do |filename|
+          puts "Adding #{filename}"
           zipfile.add(File.basename(filename), filename)
         end
       end
